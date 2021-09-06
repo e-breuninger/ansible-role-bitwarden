@@ -15,7 +15,7 @@
   tasks:
     - name: "Include bitwarden"
       include_role:
-        name: "bitwarden"
+        name: "breuninger.bitwarden"
 
   environment:
     # Increase docker timeouts
