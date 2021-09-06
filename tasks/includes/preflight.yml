@@ -1,0 +1,9 @@
+---
+- name: Check required variables are available
+  assert:
+    that:
+      - bitwarden_nginx_cert_path | length > 0
+      - bitwarden_nginx_key_path | length > 0
+      - bitwarden_domain_name | length > 0
+      - bitwarden_global_installation_id | length > 0
+      - bitwarden_global_installation_key | length > 0

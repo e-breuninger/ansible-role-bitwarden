@@ -1,0 +1,20 @@
+---
+- name: Prepare
+  hosts: all
+  become: true
+  vars:
+    docker_daemon_options:
+      storage-driver: "vfs"
+    pip_install_packages:
+      - docker-compose
+  pre_tasks:
+    - name: Ensure apt cache and required packages
+      apt:
+        update_cache: true
+        cache_valid_time: 3600
+        name:
+          - python3-docker
+          - ssl-cert
+  roles:
+    - role: geerlingguy.docker
+    - role: geerlingguy.pip

@@ -1,0 +1,24 @@
+---
+lint: |
+  set -e
+  yamllint .
+  ansible-lint . -x role-name
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: "geerlingguy/docker-${MOLECULE_DISTRO:-ubuntu2004}-ansible:latest"
+    command: /sbin/init
+    tmpfs:
+      - /run
+      - /tmp:rw,exec
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
+    privileged: true
+    pre_build_image: true
+provisioner:
+  name: ansible
+verifier:
+  name: testinfra

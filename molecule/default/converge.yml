@@ -1,0 +1,23 @@
+---
+- name: Converge
+  hosts: all
+  vars:
+    # Use snakeoil certs installed in prepare step
+    bitwarden_nginx_key_path: /etc/ssl/private/ssl-cert-snakeoil.key
+    bitwarden_nginx_cert_path: /etc/ssl/certs/ssl-cert-snakeoil.pem
+    # Generated on https://bitwarden.com/host/
+    bitwarden_global_installation_id: "ee0cacd7-f244-4605-a2ca-ad9b00cff775"
+    bitwarden_global_installation_key: "Pjh77yUDoEtxCUQVhAQ6"
+    bitwarden_global_env:
+      globalSettings__mail__smtp__host: localhost
+      globalSettings__mail__smtp__port: "25"
+      adminSettings__admins: "root@localhost"
+  tasks:
+    - name: "Include bitwarden"
+      include_role:
+        name: "bitwarden"
+
+  environment:
+    # Increase docker timeouts
+    DOCKER_CLIENT_TIMEOUT: 300
+    COMPOSE_HTTP_TIMEOUT: 300

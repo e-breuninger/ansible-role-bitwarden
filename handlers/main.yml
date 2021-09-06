@@ -1,0 +1,7 @@
+---
+# handlers file for bitwarden
+- name: restart bitwarden
+  docker_compose:
+    project_src: "{{ bitwarden_install_dir }}/docker/"
+    restarted: true
+    state: present

@@ -1,0 +1,6 @@
+---
+bitwarden_user: bitwarden
+bitwarden_user_home: /opt/bitwarden
+bitwarden_group: bitwarden
+bitwarden_install_dir: "{{ bitwarden_user_home }}/bwdata"
+bitwarden_output_dir: "{{ bitwarden_install_dir }}/docker"

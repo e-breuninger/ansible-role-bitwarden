@@ -1,0 +1,32 @@
+---
+# @var bitwarden_docker_image_coreversion:description: Bitwarden core version. This is fetched from the bitwarden.sh install script.
+bitwarden_docker_image_coreversion: 1.42.3
+
+# @var bitwarden_docker_image_webversion:description: Bitwarden web version. This is fetched from the bitwarden.sh install script.
+bitwarden_docker_image_webversion: 2.22.3
+
+# @var bitwarden_domain_name:description: Domain name witch used for hole bitwarden setup
+bitwarden_domain_name: localhost
+
+# @var bitwarden_nginx_cert_path:description:>
+# Path of the certificate file used for the Nginx container (required).
+# The user of the role is responsible for providing a valid certificate file.
+# File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
+bitwarden_nginx_cert_path:
+
+# @var bitwarden_nginx_key_path:description:>
+# Path of the key file used for the Nginx container (required).
+# The user of the role is responsible for providing a valid key file.
+# File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
+bitwarden_nginx_key_path:
+
+# @var bitwarden_global_env:description:>
+# Map of global Bitwarden environment variables. Each entire is mapped to the global.override.env.
+# See https://bitwarden.com/help/article/environment-variables/
+# @end
+# @var bitwarden_global_env:example: >
+# bitwarden_global_env:
+#   globalSettings__mail__smtp__host: localhost
+#   globalSettings__mail__smtp__port: 25
+# @end
+bitwarden_global_env: {}
