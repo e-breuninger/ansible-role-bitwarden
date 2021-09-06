@@ -31,7 +31,6 @@ jobs:
         run: |
           # Workaround to provide additional free space for testing.
           #   https://github.com/actions/virtual-environments/issues/2840
-          df -h
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
           sudo rm -rf "/usr/local/share/boost"
@@ -43,7 +42,7 @@ jobs:
           python-version: "3.x"
 
       - name: Install test dependencies.
-        run: pip3 install ansible molecule[docker] docker
+        run: pip3 install ansible molecule[docker] docker pytest-testinfra
 
       - name: Run Molecule tests.
         run: molecule test
