@@ -11,7 +11,7 @@
     restarted: true
     state: present
 
-- name: Print Bitwarden environment
+- name: Get Bitwarden environment
   docker_container:
     image: "bitwarden/setup:{{ bitwarden_docker_image_coreversion }}"
     name: setup
@@ -29,5 +29,6 @@
   register: env
   changed_when: false
 
-- debug:
+- name: Print Bitwarden environment
+  debug:
     msg: "{{ env.container.Output.split('\n') }}"
