@@ -8,17 +8,20 @@
     name: bitwarden-web
   register: bitwarden_web_facts
 
-- name: Set container version facts
-  set_fact:
-    bitwarden_current_core_version: "{{ bitwarden_admin_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
-    bitwarden_current_web_version: "{{ bitwarden_web_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
+- name: Bitwarden Setup
+  block:
+    - name: Set container version facts
+      set_fact:
+        bitwarden_current_core_version: "{{ bitwarden_admin_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
+        bitwarden_current_web_version: "{{ bitwarden_web_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
 
-- name: Check container version is higher than the new one
-  fail:
-    msg: "Down- or Upgrading Bitwarden with this role is not supported at the moment."
-  when:
-    - bitwarden_docker_image_coreversion is version(bitwarden_current_core_version, operator='ne', strict=True)
-    - bitwarden_docker_image_webversion is version(bitwarden_current_web_version, operator='ne', strict=True)
+    - name: Check container version is higher than the new one
+      fail:
+        msg: "Down- or Upgrading Bitwarden with this role is not supported at the moment."
+      when:
+        - bitwarden_docker_image_coreversion is version(bitwarden_current_core_version, operator='ne', strict=True)
+        - bitwarden_docker_image_webversion is version(bitwarden_current_web_version, operator='ne', strict=True)
+  when: bitwarden_admin_facts.exists
 #####
 # Not working at the moment - Add update mechanic later
 # Block down and upgrade for now
