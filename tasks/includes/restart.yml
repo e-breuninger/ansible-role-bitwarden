@@ -1,10 +1,5 @@
 ---
 # Include for restart handler
-- name: Pull Bitwarden images
-  docker_compose:
-    project_src: "{{ bitwarden_install_dir }}/docker/"
-    pull: true
-
 - name: Restart Bitwarden
   docker_compose:
     project_src: "{{ bitwarden_install_dir }}/docker/"
