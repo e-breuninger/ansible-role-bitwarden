@@ -30,3 +30,13 @@ bitwarden_nginx_key_path:
 #   globalSettings__mail__smtp__port: 25
 # @end
 bitwarden_global_env: {}
+
+# @var bitwarden_setup_config:description:>
+# Map of Bitwarden setup configuration values to override.
+# Use this to change values in the generated config.yml file from Bitwarden.
+# @end
+# @var bitwarden_setup_config:example: >
+# bitwarden_setup_config:
+#   database_docker_volume: true
+# @end
+bitwarden_setup_config: {}

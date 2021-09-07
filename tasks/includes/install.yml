@@ -6,7 +6,7 @@
 - name: Run Bitwarden setup container
   docker_container:
     image: bitwarden/setup
-    name: bw-setup
+    name: setup
     detach: false
     volumes:
       - "{{ bitwarden_install_dir }}:/bitwarden"

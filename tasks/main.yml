@@ -14,5 +14,8 @@
   include_tasks: includes/install.yml
   when: not output_dir.stat.exists
 
+- name: Include Bitwarden update
+  include_tasks: includes/update.yml
+
 - name: Configure Bitwarden
   include_tasks: includes/configure.yml

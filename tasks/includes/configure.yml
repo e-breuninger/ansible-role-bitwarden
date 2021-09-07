@@ -16,7 +16,7 @@
     group: "{{ bitwarden_group }}"
     mode: "0600"
 
-- name: Ensure values in Bitwarden configuration file
+- name: Ensure values in Bitwarden configuration for TLS
   ansible.builtin.lineinfile:
     path: "{{ bitwarden_install_dir }}/config.yml"
     regexp: "^{{ item.key }}="
@@ -33,10 +33,19 @@
   register: bitwarden_config
   notify: restart bitwarden
 
+- name: Ensure custom values in Bitwarden configuration
+  ansible.builtin.lineinfile:
+    path: "{{ bitwarden_install_dir }}/config.yml"
+    regexp: "^{{ item.key }}:"
+    line: "{{ item.key }}: {{ item.value }}"
+  loop: "{{ bitwarden_setup_config | dict2items }}"
+  register: bitwarden_config_custom
+  notify: restart bitwarden
+
 - name: Run Bitwarden setup container in update mode
   docker_container:
     image: bitwarden/setup
-    name: bw-setup
+    name: setup
     detach: false
     volumes:
       - "{{ bitwarden_install_dir }}:/bitwarden"
@@ -50,7 +59,7 @@
       - "-webv {{ bitwarden_docker_image_webversion }}"
   register: bitwarden_update
   notify: restart bitwarden
-  when: bitwarden_config.changed # noqa no-handler
+  when: bitwarden_config.changed or bitwarden_config_custom.changed # noqa no-handler
 
 - name: Debug Bitwarden update
   debug:

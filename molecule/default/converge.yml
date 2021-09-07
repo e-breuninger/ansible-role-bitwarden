@@ -12,6 +12,8 @@
       globalSettings__mail__smtp__host: localhost
       globalSettings__mail__smtp__port: "25"
       adminSettings__admins: "root@localhost"
+    bitwarden_setup_config:
+      database_docker_volume: "true"
   tasks:
     - name: "Include bitwarden"
       include_role:

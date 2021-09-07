@@ -1,0 +1,33 @@
+---
+# Include for restart handler
+- name: Pull Bitwarden images
+  docker_compose:
+    project_src: "{{ bitwarden_install_dir }}/docker/"
+    pull: true
+
+- name: Restart Bitwarden
+  docker_compose:
+    project_src: "{{ bitwarden_install_dir }}/docker/"
+    restarted: true
+    state: present
+
+- name: Print Bitwarden environment
+  docker_container:
+    image: "bitwarden/setup:{{ bitwarden_docker_image_coreversion }}"
+    name: setup
+    detach: false
+    volumes:
+      - "{{ bitwarden_install_dir }}:/bitwarden"
+    env_file: "{{ bitwarden_install_dir }}/env/uid.env"
+    command:
+      - dotnet
+      - Setup.dll
+      - "-printenv 1"
+      - "-os lin"
+      - "-corev {{ bitwarden_docker_image_coreversion }}"
+      - "-webv {{ bitwarden_docker_image_webversion }}"
+  register: env
+  changed_when: false
+
+- debug:
+    msg: "{{ env.container.Output.split('\n') }}"

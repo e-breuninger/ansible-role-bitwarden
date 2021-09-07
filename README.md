@@ -14,6 +14,7 @@ Install and configure bitwarden on premise in docker-compose fashion.
 ## Table of content
 
 * [Default Variables](#default-variables)
+  * [bitwarden_config_custom](#bitwarden_config_custom)
   * [bitwarden_docker_image_coreversion](#bitwarden_docker_image_coreversion)
   * [bitwarden_docker_image_webversion](#bitwarden_docker_image_webversion)
   * [bitwarden_domain_name](#bitwarden_domain_name)
@@ -27,6 +28,23 @@ Install and configure bitwarden on premise in docker-compose fashion.
 ---
 
 ## Default Variables
+
+### bitwarden_config_custom
+
+Map of Bitwarden setup configuration values to override. Use this to change values in the generated config.yml file from Bitwarden.
+
+#### Default value
+
+```YAML
+bitwarden_config_custom: {}
+```
+
+#### Example usage
+
+```YAML
+bitwarden_config_custom:
+  database_docker_volume: true
+```
 
 ### bitwarden_docker_image_coreversion
 
