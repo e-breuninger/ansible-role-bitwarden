@@ -25,12 +25,11 @@ jobs:
 
       - name: "Free up disk space"
         run: |
-          sudo apt-get -qq purge build-essential ghc* 
+          pwd
+          df -h
+          sudo apt-get -qq purge build-essential ghc*  azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
           sudo apt-get clean
           docker system prune -af
-          sudo mkdir /mnt/ccache
-          mkdir ${{ env.CCACHE_DIR }}
-          sudo mount --bind ${{ env.CCACHE_DIR }} /mnt/ccache
           sudo rm -rf /usr/local/*
           df -h
 
