@@ -22,22 +22,17 @@ jobs:
           - ubuntu2004
 
     steps:
-      - name: Maximize build space
-        uses: easimon/maximize-build-space@master
-        with:
-          remove-dotnet: "true"
-          remove-haskell: "true"
-          remove-android: "true"
-          
-      - name: Build
-        run: |
-          echo "Free space:"
-          df -h
-
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
           path: "breuninger.bitwarden"
+      - name: free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          docker rmi $(docker image ls -aq)
+          df -h
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
