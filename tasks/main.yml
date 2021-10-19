@@ -16,20 +16,3 @@
 
 - name: Configure Bitwarden
   include_tasks: includes/configure.yml
-
-- name: Update Bitwarden if required
-  include_tasks: includes/update.yml
-
-- name: Check Bitwarden is already running
-  docker_container_info:
-    name: bitwarden-nginx
-  register: bw_running
-
-- name: Ensure Bitwarden is started
-  command: ./bitwarden.sh restart
-  register: bw_start
-  args:
-    chdir: "{{ bitwarden_user_home }}"
-  become_user: "{{ bitwarden_user }}"
-  become: true
-  when: "not bw_running.exists"

@@ -2,13 +2,25 @@
 
 [![CI](https://github.com/e-breuninger/ansible-role-bitwarden/actions/workflows/ci.yml/badge.svg)](https://github.com/e-breuninger/ansible-role-bitwarden/actions/workflows/ci.yml)
 
-Deploy Bitwarden with Docker and Docker-Compose following the steps provided by Bitwardens setup.sh.
+Deploy Bitwarden with Docker and Docker-Compose using the `bitwarden.sh`.
 
-The setup script is not fully automatabel, so this role uses it as a blueprint.
-Instead of doing every step via Ansible the Bitwarden Setup container is used.
+This role is an automated wrapper around the Bitwarden setup scripts. 
+It makes heavy use of handlers to trigger reconfigure and update tasks. 
 
+If you need any task not covered by the role it's totally fine to use the setup script on the machine directly.
 Use the official docs as reference: https://bitwarden.com/help/article/install-on-premise/
 
+## Known issues
+
+### Certbot
+
+We currently only support static TLS certificates for Nginx. The Certbot integration is not configured.
+Feel free to add this feature as a PR if needed. 
+
+### Bitwarden version
+
+Bitwarden has a different version in the setup files than in the tagged version of the repo may indicates.
+This is due to their release strategy, which always increases the actual version only in the master. We are already in talks with Bitwarden and hope for a different mode of release.
 Install and configure bitwarden on premise in docker-compose fashion.
 
 ## Table of content
@@ -98,7 +110,7 @@ bitwarden_setup_config:
 #### Default value
 
 ```YAML
-bitwarden_version: 1.43.0
+bitwarden_version: v1.43.0
 ```
 
 ## Dependencies

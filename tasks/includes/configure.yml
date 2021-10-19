@@ -23,17 +23,7 @@
     line: "{{ item.key }}: {{ item.value }}"
   loop: "{{ bitwarden_setup_config | dict2items }}"
   register: bw_config
-
-- name: Rebuild Bitwarden if config has changed
-  command: ./bitwarden.sh rebuild
-  register: bw_rebuild
-  args:
-    chdir: "{{ bitwarden_user_home }}"
-  become_user: "{{ bitwarden_user }}"
-  become: true
-  when: bw_config.changed
-  tags:
-    - skip_ansible_lint
+  notify: rebuild bitwarden
 
 - name: Ensure Bitwarden global environment
   ansible.builtin.lineinfile:

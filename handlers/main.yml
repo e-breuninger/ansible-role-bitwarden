@@ -1,7 +1,22 @@
 ---
+# Handlers always run in the order they are defined, not in the order listed in the notify-statement.
+- name: rebuild bitwarden
+  command: ./bitwarden.sh rebuild
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
+
 - name: restart bitwarden
   command: ./bitwarden.sh restart
-  register: bw_rebuild
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
+
+# Update should run at last when containers are running
+- name: update bitwarden
+  command: ./bitwarden.sh update
   args:
     chdir: "{{ bitwarden_user_home }}"
   become_user: "{{ bitwarden_user }}"

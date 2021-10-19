@@ -1,11 +1,3 @@
-- name: Download bitwarden.sh for {{ bitwarden_version }}
-  get_url:
-    url: https://raw.githubusercontent.com/bitwarden/server/v{{ bitwarden_version }}/scripts/bitwarden.sh
-    dest: "{{ bitwarden_user_home }}/bitwarden.sh"
-    mode: "0700"
-    owner: "{{ bitwarden_user }}"
-    group: "{{ bitwarden_group }}"
-
 - name: Run install bitwarden.sh
   expect:
     command: ./bitwarden.sh install
@@ -27,25 +19,8 @@
 - name: Debug output
   debug:
     var: bw_install
+    verbosity: 1
 
 - name: Check install command output
   assert:
     that: "'Installation complete' in bw_install.stdout"
-
-- name: Create directory for ansible custom facts
-  ansible.builtin.file:
-    state: directory
-    recurse: yes
-    path: /etc/ansible/facts.d
-
-- name: Put current Bitwarden version in file for later checks
-  copy:
-    dest: "/etc/ansible/facts.d/bitwarden.fact"
-    content: |
-      [bitwarden]
-      version = 1.0.0
-    mode: "0644"
-
-- name: Re-read facts after adding custom fact
-  ansible.builtin.setup:
-    filter: ansible_local
