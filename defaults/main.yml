@@ -1,9 +1,6 @@
 ---
-# @var bitwarden_docker_image_coreversion:description: Bitwarden core version. This is fetched from the bitwarden.sh install script.
-bitwarden_docker_image_coreversion: 1.42.3
-
-# @var bitwarden_docker_image_webversion:description: Bitwarden web version. This is fetched from the bitwarden.sh install script.
-bitwarden_docker_image_webversion: 2.22.3
+# @var bitwarden_domain_name:description: Github tagged version of Bitwarden install script to use. Note that this has a different version in the script than the tag.
+bitwarden_version: "v1.43.0"
 
 # @var bitwarden_domain_name:description: Domain name witch used for hole bitwarden setup
 bitwarden_domain_name: localhost

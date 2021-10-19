@@ -16,10 +16,6 @@ jobs:
   molecule:
     name: Molecule
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        distro:
-          - ubuntu2004
 
     steps:
       - name: Check out the codebase.
@@ -27,14 +23,15 @@ jobs:
         with:
           path: "breuninger.bitwarden"
 
-      - name: Cleanup
+      - name: "Free up disk space"
         run: |
-          # Workaround to provide additional free space for testing.
-          #   https://github.com/actions/virtual-environments/issues/2840
-          sudo rm -rf /usr/share/dotnet
-          sudo rm -rf /opt/ghc
-          sudo rm -rf "/usr/local/share/boost"
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY"
+          pwd
+          df -h
+          sudo apt-get -qq purge build-essential ghc*  azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get clean
+          docker system prune -af
+          sudo rm -rf /usr/local/*
+          df -h
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2

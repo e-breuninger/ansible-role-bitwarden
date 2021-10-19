@@ -7,6 +7,7 @@
       storage-driver: "vfs"
     pip_install_packages:
       - docker-compose
+      - pexpect
   pre_tasks:
     - name: Ensure apt cache and required packages
       apt:
@@ -15,6 +16,7 @@
         name:
           - python3-docker
           - ssl-cert
+          - curl
   roles:
     - role: geerlingguy.docker
     - role: geerlingguy.pip

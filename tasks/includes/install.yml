@@ -1,63 +1,26 @@
-- name: Pull Bitwarden Setup image
-  docker_image:
-    name: bitwarden/setup
-    source: pull
+- name: Run install bitwarden.sh
+  expect:
+    command: ./bitwarden.sh install
+    responses:
+      (?i).+domain name.+: "{{ bitwarden_domain_name }}"
+      (?i).+Encrypt.+: "n"
+      (?i).+database.+: "vault"
+      (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
+      (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
+      (?i).+SSL certificate to use.+: "y"
+      (?i).+trusted SSL certificate.+: "n"
+    creates: bwdata/config.yml
+  register: bw_install
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
 
-- name: Run Bitwarden setup container
-  docker_container:
-    image: bitwarden/setup
-    name: setup
-    detach: false
-    volumes:
-      - "{{ bitwarden_install_dir }}:/bitwarden"
-    env_file: "{{ bitwarden_install_dir }}/env/uid.env"
-    command:
-      - dotnet
-      - Setup.dll
-      - "-install 1"
-      - "-domain {{ bitwarden_domain_name }}"
-      - "-letsencrypt n"
-      - "-os lin"
-      - "-corev {{ bitwarden_docker_image_coreversion }}"
-      - "-webv {{ bitwarden_docker_image_webversion }}"
-      - "-dbname vault"
-      - "-install-id {{ bitwarden_global_installation_id }}"
-      - "-install-key {{ bitwarden_global_installation_key }}"
-      - "-skip-ssl true" # SSl is configured later
-  register: install
-  notify: restart bitwarden
-
-- name: Debug Bitwarden installation
+- name: Debug output
   debug:
-    var: install.container.Output
+    var: bw_install
     verbosity: 1
 
-# Setup container does not send a error code when failed
-# So we need to check the output
-- name: Assert installation was successfull
-  fail:
-    msg: "Bitwarden Installation failed with message: {{ install.container.Output }}"
-  when: "'Installation complete' not in install.container.Output"
-
-- name: Ensure bitwarden folders
-  file:
-    state: directory
-    path: "{{ bitwarden_install_dir }}/{{ item }}"
-    owner: "{{ bitwarden_user }}"
-    group: "{{ bitwarden_group }}"
-    mode: "0755"
-    recurse: true
-  loop:
-    - "core/attachments"
-    - "logs/admin"
-    - "logs/api"
-    - "logs/events"
-    - "logs/icons"
-    - "logs/identity"
-    - "logs/mssql"
-    - "logs/nginx"
-    - "logs/notifications"
-    - "logs/sso"
-    - "logs/portal"
-    - "mssql/backups"
-    - "mssql/data"
+- name: Check install command output
+  assert:
+    that: "'Installation complete' in bw_install.stdout"
