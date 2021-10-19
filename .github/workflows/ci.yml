@@ -18,6 +18,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Check out the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: "breuninger.bitwarden"
+
       - name: "Free up disk space"
         run: |
           sudo apt-get -qq purge build-essential ghc* 
@@ -28,11 +33,6 @@ jobs:
           sudo mount --bind ${{ env.CCACHE_DIR }} /mnt/ccache
           sudo rm -rf /usr/local/*
           df -h
-
-      - name: Check out the codebase.
-        uses: actions/checkout@v2
-        with:
-          path: "breuninger.bitwarden"
 
       - name: Set up Python 3.
         uses: actions/setup-python@v2
