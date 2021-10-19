@@ -12,21 +12,3 @@
     system: true
     home: "{{ bitwarden_user_home }}"
   register: user
-
-- name: Ensure ENV file directory
-  file:
-    path: "{{ bitwarden_install_dir }}/env"
-    state: directory
-    owner: "{{ bitwarden_user }}"
-    group: "{{ bitwarden_group }}"
-    mode: "0755"
-
-- name: Ensure UID and GID mapping file
-  copy:
-    content: |
-      LOCAL_UID={{ user.uid }}
-      LOCAL_GID={{ user.group }}
-    dest: "{{ bitwarden_install_dir }}/env/uid.env"
-    owner: "{{ bitwarden_user }}"
-    group: "{{ bitwarden_group }}"
-    mode: "0644"

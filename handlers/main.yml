@@ -1,3 +1,8 @@
 ---
 - name: restart bitwarden
-  include_tasks: tasks/includes/restart.yml
+  command: ./bitwarden.sh restart
+  register: bw_rebuild
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true

@@ -7,15 +7,29 @@
 
 - name: Check Bitwarden is already installed
   ansible.builtin.stat:
-    path: "{{ bitwarden_output_dir }}"
+    path: "{{ bitwarden_install_dir }}"
   register: output_dir
 
 - name: Include Bitwarden setup
   include_tasks: includes/install.yml
   when: not output_dir.stat.exists
 
-- name: Include Bitwarden update
-  include_tasks: includes/update.yml
-
 - name: Configure Bitwarden
   include_tasks: includes/configure.yml
+
+- name: Update Bitwarden if required
+  include_tasks: includes/update.yml
+
+- name: Check Bitwarden is already running
+  docker_container_info:
+    name: bitwarden-nginx
+  register: bw_running
+
+- name: Ensure Bitwarden is started
+  command: ./bitwarden.sh restart
+  register: bw_start
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
+  when: "not bw_running.exists"

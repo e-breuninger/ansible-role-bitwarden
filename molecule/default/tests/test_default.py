@@ -47,7 +47,7 @@ def test_nginx_container_https_exposed_port(host):
 
 def test_host_certificate_exists(host):
     """Validare host certificate in Bitwarden certificate directory"""
-    cert_file = host.file("/opt/bitwarden/bwdata/ssl/bitwarden.crt")
+    cert_file = host.file("/opt/bitwarden/bwdata/ssl/localhost/certificate.crt")
     assert cert_file.is_file
     assert cert_file.exists
     assert cert_file.mode == 0o600
@@ -57,7 +57,7 @@ def test_host_certificate_exists(host):
 
 def test_host_certificate_key_exists(host):
     """Validare host certificate key in Bitwarden certificate directory"""
-    cert_file = host.file("/opt/bitwarden/bwdata/ssl/bitwarden.key")
+    cert_file = host.file("/opt/bitwarden/bwdata/ssl/localhost/private.key")
     assert cert_file.is_file
     assert cert_file.exists
     assert cert_file.mode == 0o600

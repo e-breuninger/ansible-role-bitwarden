@@ -1,7 +1,7 @@
 - name: Copy Bitwarden nginx certificate in place
   copy:
     src: "{{ bitwarden_nginx_cert_path }}"
-    dest: "{{ bitwarden_install_dir }}/ssl/bitwarden.crt"
+    dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/certificate.crt"
     remote_src: true
     owner: "{{ bitwarden_user }}"
     group: "{{ bitwarden_group }}"
@@ -10,28 +10,11 @@
 - name: Copy Bitwarden nginx key in place
   copy:
     src: "{{ bitwarden_nginx_key_path }}"
-    dest: "{{ bitwarden_install_dir }}/ssl/bitwarden.key"
+    dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/private.key"
     remote_src: true
     owner: "{{ bitwarden_user }}"
     group: "{{ bitwarden_group }}"
     mode: "0600"
-
-- name: Ensure values in Bitwarden configuration for TLS
-  ansible.builtin.lineinfile:
-    path: "{{ bitwarden_install_dir }}/config.yml"
-    regexp: "^{{ item.key }}="
-    line: "{{ item.key }}: {{ item.value }}"
-  loop:
-    - key: "url"
-      value: "https://{{ bitwarden_domain_name }}"
-    - key: "ssl"
-      value: "true"
-    - key: ssl_certificate_path
-      value: "/etc/ssl/bitwarden.crt"
-    - key: "ssl_key_path"
-      value: "/etc/ssl/bitwarden.key"
-  register: bitwarden_config
-  notify: restart bitwarden
 
 - name: Ensure custom values in Bitwarden configuration
   ansible.builtin.lineinfile:
@@ -39,32 +22,18 @@
     regexp: "^{{ item.key }}:"
     line: "{{ item.key }}: {{ item.value }}"
   loop: "{{ bitwarden_setup_config | dict2items }}"
-  register: bitwarden_config_custom
-  notify: restart bitwarden
+  register: bw_config
 
-- name: Run Bitwarden setup container in update mode
-  docker_container:
-    image: bitwarden/setup
-    name: setup
-    detach: false
-    volumes:
-      - "{{ bitwarden_install_dir }}:/bitwarden"
-    env_file: "{{ bitwarden_install_dir }}/env/uid.env"
-    command:
-      - dotnet
-      - Setup.dll
-      - "-update 1"
-      - "-os lin"
-      - "-corev {{ bitwarden_docker_image_coreversion }}"
-      - "-webv {{ bitwarden_docker_image_webversion }}"
-  register: bitwarden_update
-  notify: restart bitwarden
-  when: bitwarden_config.changed or bitwarden_config_custom.changed # noqa no-handler
-
-- name: Debug Bitwarden update
-  debug:
-    var: bitwarden_update
-    verbosity: 1
+- name: Rebuild Bitwarden if config has changed
+  command: ./bitwarden.sh rebuild
+  register: bw_rebuild
+  args:
+    chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
+  when: bw_config.changed
+  tags:
+    - skip_ansible_lint
 
 - name: Ensure Bitwarden global environment
   ansible.builtin.lineinfile:

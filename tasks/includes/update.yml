@@ -1,57 +1,13 @@
-- name: Get infos on bitwarden-admin container
-  docker_container_info:
-    name: bitwarden-admin
-  register: bitwarden_admin_facts
+- name: Run Bitwarden update if required
+  command: ./bitwarden.sh update
+  register: bw_update
+  args:
+      chdir: "{{ bitwarden_user_home }}"
+  become_user: "{{ bitwarden_user }}"
+  become: true
+  # Check if the current version from facts is lowe than the requested version
+  when: bitwarden_version is version(ansible_local.bitwarden.bitwarden.version, operator='<', strict=True)
 
-- name: Get infos on bitwarden-web container
-  docker_container_info:
-    name: bitwarden-web
-  register: bitwarden_web_facts
-
-- name: Bitwarden Setup
-  block:
-    - name: Set container version facts
-      set_fact:
-        bitwarden_current_core_version: "{{ bitwarden_admin_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
-        bitwarden_current_web_version: "{{ bitwarden_web_facts.container.Config.Image | regex_search(':([1-9.]+)$', '\\1') | first }}"
-
-    - name: Check container version is higher than the new one
-      fail:
-        msg: "Down- or Upgrading Bitwarden with this role is not supported at the moment."
-      when:
-        - bitwarden_docker_image_coreversion is version(bitwarden_current_core_version, operator='ne', strict=True)
-        - bitwarden_docker_image_webversion is version(bitwarden_current_web_version, operator='ne', strict=True)
-  when: bitwarden_admin_facts.exists
-#####
-# Not working at the moment - Add update mechanic later
-# Block down and upgrade for now
-####
-# - name: Get infos on bitwarden-mssql container
-#   docker_container_info:
-#     name: bitwarden-mssql
-#   register: bitwarden_mssql_facts
-
-# - debug:
-#     var: bitwarden_mssql_facts
-# - name: Run Bitwarden setup container in database update mode
-#   docker_container:
-#     image: "bitwarden/setup:{{ bitwarden_docker_image_coreversion }}"
-#     name: setup
-#     detach: "Bitwarden Installation failed with message: {{ install.container.Output }}"
-#     volumes:
-#       - "{{ bitwarden_install_dir }}:/bitwarden"
-#     env_file: "{{ bitwarden_install_dir }}/env/uid.env"
-#     network_mode: "container:{{bitwarden_mssql_facts.container.Id}}"
-#     command:
-#       - dotnet
-#       - Setup.dll
-#       - "-update 1"
-#       - "-db 1"
-#       - "-os lin"
-#       - "-corev {{ bitwarden_docker_image_coreversion }}"
-#       - "-webv {{ bitwarden_docker_image_webversion }}"
-#   register: foo
-#   notify: restart bitwarden
-
-# - debug:
-#     var: foo.container.Output
+- name: Debug output
+  debug:
+      var: bw_update

@@ -14,13 +14,12 @@ Install and configure bitwarden on premise in docker-compose fashion.
 ## Table of content
 
 * [Default Variables](#default-variables)
-  * [bitwarden_config_custom](#bitwarden_config_custom)
-  * [bitwarden_docker_image_coreversion](#bitwarden_docker_image_coreversion)
-  * [bitwarden_docker_image_webversion](#bitwarden_docker_image_webversion)
   * [bitwarden_domain_name](#bitwarden_domain_name)
   * [bitwarden_global_env](#bitwarden_global_env)
   * [bitwarden_nginx_cert_path](#bitwarden_nginx_cert_path)
   * [bitwarden_nginx_key_path](#bitwarden_nginx_key_path)
+  * [bitwarden_setup_config](#bitwarden_setup_config)
+  * [bitwarden_version](#bitwarden_version)
 * [Dependencies](#dependencies)
 * [License](#license)
 * [Author](#author)
@@ -28,43 +27,6 @@ Install and configure bitwarden on premise in docker-compose fashion.
 ---
 
 ## Default Variables
-
-### bitwarden_config_custom
-
-Map of Bitwarden setup configuration values to override. Use this to change values in the generated config.yml file from Bitwarden.
-
-#### Default value
-
-```YAML
-bitwarden_config_custom: {}
-```
-
-#### Example usage
-
-```YAML
-bitwarden_config_custom:
-  database_docker_volume: true
-```
-
-### bitwarden_docker_image_coreversion
-
-Bitwarden core version. This is fetched from the bitwarden.sh install script.
-
-#### Default value
-
-```YAML
-bitwarden_docker_image_coreversion: 1.42.3
-```
-
-### bitwarden_docker_image_webversion
-
-Bitwarden web version. This is fetched from the bitwarden.sh install script.
-
-#### Default value
-
-```YAML
-bitwarden_docker_image_webversion: 2.22.3
-```
 
 ### bitwarden_domain_name
 
@@ -112,6 +74,31 @@ Path of the key file used for the Nginx container (required). The user of the ro
 
 ```YAML
 bitwarden_nginx_key_path:
+```
+
+### bitwarden_setup_config
+
+Map of Bitwarden setup configuration values to override. Use this to change values in the generated config.yml file from Bitwarden.
+
+#### Default value
+
+```YAML
+bitwarden_setup_config: {}
+```
+
+#### Example usage
+
+```YAML
+bitwarden_setup_config:
+  database_docker_volume: true
+```
+
+### bitwarden_version
+
+#### Default value
+
+```YAML
+bitwarden_version: 1.43.0
 ```
 
 ## Dependencies
