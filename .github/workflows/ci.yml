@@ -28,6 +28,11 @@ jobs:
           remove-dotnet: "true"
           remove-haskell: "true"
           remove-android: "true"
+          
+      - name: Build
+        run: |
+          echo "Free space:"
+          df -h
 
       - name: Check out the codebase.
         uses: actions/checkout@v2
