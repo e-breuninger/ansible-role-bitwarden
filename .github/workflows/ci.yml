@@ -16,35 +16,25 @@ jobs:
   molecule:
     name: Molecule
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        distro:
-          - ubuntu2004
 
     steps:
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          remove-dotnet: "true"
+          remove-android: "true"
+          remove-haskell: "true"
+
+      - name: Debug space
+        run: |
+          echo "Free space:"
+          df -h
+
       - name: Check out the codebase.
         uses: actions/checkout@v2
         with:
           path: "breuninger.bitwarden"
-      - name: free disk space
-        run: |
-          echo "Listing 100 largest packages"
-          dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n | tail -n 100
-          df -h
-          echo "Removing large packages"
-          sudo apt-get remove -y '^ghc-8.*'
-          sudo apt-get remove -y '^dotnet-.*'
-          sudo apt-get remove -y '^llvm-.*'
-          sudo apt-get remove -y 'php.*'
-          sudo apt-get remove -y azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
-          sudo apt-get autoremove -y
-          sudo apt-get clean
-          df -h
-          echo "Removing large directories"
-          # deleting 15GB
-          rm -rf /usr/share/dotnet/
-          df -h
-          
+
       - name: Set up Python 3.
         uses: actions/setup-python@v2
         with:
