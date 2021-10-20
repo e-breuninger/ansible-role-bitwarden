@@ -1,5 +1,6 @@
 docs:
 	docker run \
+	--rm \
 	-e ANSIBLE_DOCTOR_ROLE_NAME=bitwarden \
 	-e ANSIBLE_DOCTOR_ROLE_DIR=/doctor/ \
 	-e ANSIBLE_DOCTOR_OUTPUT_DIR=/doctor/ \
