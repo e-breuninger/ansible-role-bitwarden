@@ -1,5 +1,5 @@
 - name: Run install bitwarden.sh with SSL mode set to "provided"
-  when: bitwarden_ssl_mode == provided
+  when: bitwarden_ssl_mode == "provided"
   expect:
     command: ./bitwarden.sh install
     responses:
@@ -18,7 +18,7 @@
   become: true
 
 - name: Run install bitwarden.sh with SSL mode set to "lets-encrypt"
-  when: bitwarden_ssl_mode == lets-encrypt
+  when: bitwarden_ssl_mode == "lets-encrypt"
   expect:
     command: ./bitwarden.sh install
     responses:
