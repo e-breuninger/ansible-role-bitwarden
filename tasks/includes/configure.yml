@@ -1,4 +1,5 @@
 - name: Copy Bitwarden nginx certificate in place
+  when: bitwarden_ssl_mode == provided
   copy:
     src: "{{ bitwarden_nginx_cert_path }}"
     dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/certificate.crt"
@@ -8,6 +9,7 @@
     mode: "0600"
 
 - name: Copy Bitwarden nginx key in place
+  when: bitwarden_ssl_mode == provided
   copy:
     src: "{{ bitwarden_nginx_key_path }}"
     dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/private.key"

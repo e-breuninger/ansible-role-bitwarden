@@ -17,7 +17,6 @@ def test_bitwarden_user(host):
     [
         ("bitwarden-nginx"),
         ("bitwarden-admin"),
-        ("bitwarden-portal"),
         ("bitwarden-mssql"),
         ("bitwarden-web"),
         ("bitwarden-api"),
