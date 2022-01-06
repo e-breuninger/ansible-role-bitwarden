@@ -23,7 +23,7 @@
     command: ./bitwarden.sh install
     responses:
       (?i).+domain name.+: "{{ bitwarden_domain_name }}"
-      (?i).+Encrypt.+: "y"
+      (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "y"
       (?i).+email address.+: "{{ bitwarden_lets_encrypt_email }}"
       (?i).+database.+: "vault"
       (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
