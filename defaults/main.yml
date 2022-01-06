@@ -49,4 +49,4 @@ bitwarden_global_env: {}
 bitwarden_setup_config: {}
 
 
-bitwarde_start_after_install: true
+bitwarden_start_after_install: true
