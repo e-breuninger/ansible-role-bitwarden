@@ -29,9 +29,7 @@
       (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
       (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
     creates: bwdata/config.yml
-    async: 300
-    poll: 10
-    #timeout: 300
+    timeout: 300
   register: bw_install
   args:
     chdir: "{{ bitwarden_user_home }}"

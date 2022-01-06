@@ -5,10 +5,10 @@
 - name: Ensure user and environment
   include_tasks: includes/prepare.yml
 
-#- name: Check Bitwarden is already installed
-#  ansible.builtin.stat:
-#    path: "{{ bitwarden_install_dir }}"
-#  register: output_dir
+- name: Check Bitwarden is already installed
+  ansible.builtin.stat:
+    path: "{{ bitwarden_install_dir }}"
+  register: output_dir
 
 - name: Include Bitwarden setup
   include_tasks: includes/install.yml
