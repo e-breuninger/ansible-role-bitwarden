@@ -32,6 +32,8 @@
   register: bw_install
   args:
     chdir: "{{ bitwarden_user_home }}"
+  async: 300
+  poll: 10
   become_user: "{{ bitwarden_user }}"
   become: true
 
