@@ -37,6 +37,6 @@
   notify: restart bitwarden
 
 - name: Start Bitwarden
-  when: bitwarden_start_after_install == "true"
+  when: bitwarden_start_after_install
   command: /bin/true
   notify: start bitwarden
