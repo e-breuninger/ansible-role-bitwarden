@@ -11,7 +11,8 @@
   command: ./bitwarden.sh start
   args:
     chdir: "{{ bitwarden_user_home }}"
-  timeout: 300
+  async: 300
+  poll: 5
   become_user: "{{ bitwarden_user }}"
   become: true
 
