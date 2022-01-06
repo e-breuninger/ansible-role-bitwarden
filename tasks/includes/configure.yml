@@ -35,3 +35,8 @@
   loop: "{{ bitwarden_global_env | dict2items }}"
   no_log: true
   notify: restart bitwarden
+
+- name: Start Bitwarden
+  when: bitwarden_start_after_install == "true"
+  command: /bin/true
+  notify: start bitwarden
