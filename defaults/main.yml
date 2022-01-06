@@ -48,3 +48,5 @@ bitwarden_global_env: {}
 # @end
 bitwarden_setup_config: {}
 
+
+bitwarde_start_after_install: True

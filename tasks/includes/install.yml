@@ -43,3 +43,8 @@
 - name: Check install command output
   assert:
     that: "'Installation complete' in bw_install.stdout"
+
+- name: Start Bitwarden
+  when: bitwarden_start_after_install == "true"
+  command: /bin/true
+  notify: start bitwarden
