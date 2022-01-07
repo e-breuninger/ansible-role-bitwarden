@@ -36,7 +36,7 @@
   no_log: true
   notify: restart bitwarden
 
-- name: Start Bitwarden
-  when: bitwarden_start_after_install
-  command: /bin/true
-  notify: start bitwarden
+#- name: Start Bitwarden
+#  when: bitwarden_start_after_install
+#  command: /bin/true
+#  notify: start bitwarden
