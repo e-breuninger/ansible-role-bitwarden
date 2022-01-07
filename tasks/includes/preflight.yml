@@ -6,6 +6,11 @@
       - bitwarden_global_installation_id | length > 0
       - bitwarden_global_installation_key | length > 0
 
+- name: Check supported ssl-mode
+  assert:
+    that:
+      - bitwarden_ssl_mode in ["provided", "lets_encrypt", "generate", "disable"]
+
 - name: Check required variables for SSL mode "provided"
   when: bitwarden_ssl_mode == "provided"
   assert:

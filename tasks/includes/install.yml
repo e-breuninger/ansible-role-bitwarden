@@ -1,35 +1,8 @@
 - name: Run install bitwarden.sh with SSL mode set to "provided"
-  when: bitwarden_ssl_mode == "provided"
   expect:
     command: ./bitwarden.sh install
-    responses:
-      (?i).+domain name.+: "{{ bitwarden_domain_name }}"
-      (?i).+Encrypt.+: "n"
-      (?i).+database.+: "vault"
-      (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
-      (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
-      (?i).+SSL certificate to use.+: "y"
-      (?i).+trusted SSL certificate.+: "n"
+    responses: {{ bitwarden_install_inputs[bitwarden_ssl_mode] }}
     creates: bwdata/config.yml
-  register: bw_install
-  args:
-    chdir: "{{ bitwarden_user_home }}"
-  become_user: "{{ bitwarden_user }}"
-  become: true
-
-- name: Run install bitwarden.sh with SSL mode set to "lets-encrypt"
-  when: bitwarden_ssl_mode == "lets-encrypt"
-  expect:
-    command: ./bitwarden.sh install
-    responses:
-      (?i).+domain name.+: "{{ bitwarden_domain_name }}"
-      (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "y"
-      (?i).+email address.+: "{{ bitwarden_lets_encrypt_email }}"
-      (?i).+database.+: "vault"
-      (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
-      (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
-    creates: bwdata/config.yml
-    timeout: 300
   register: bw_install
   args:
     chdir: "{{ bitwarden_user_home }}"

@@ -4,3 +4,36 @@ bitwarden_user_home: /opt/bitwarden
 bitwarden_group: bitwarden
 bitwarden_install_dir: "{{ bitwarden_user_home }}/bwdata"
 bitwarden_output_dir: "{{ bitwarden_install_dir }}/docker"
+
+bitwarden_install_inputs:
+  provided:
+    (?i).+domain name.+: "{{ bitwarden_domain_name }}"
+    (?i).+Encrypt.+: "n"
+    (?i).+database.+: "vault"
+    (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+SSL certificate to use.+: "y"
+    (?i).+trusted SSL certificate.+: "n"
+  lets_encrypt:
+    (?i).+domain name.+: "{{ bitwarden_domain_name }}"
+    (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "y"
+    (?i).+email address.+: "{{ bitwarden_lets_encrypt_email }}"
+    (?i).+database.+: "vault"
+    (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
+  generate:
+    (?i).+domain name.+: "{{ bitwarden_domain_name }}"
+    (?i).+Encrypt.+: "n"
+    (?i).+database.+: "vault"
+    (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+SSL certificate to use.+: "n"
+    (?i).+trusted SSL certificate.+: "y"
+  disabled:
+    (?i).+domain name.+: "{{ bitwarden_domain_name }}"
+    (?i).+Encrypt.+: "n"
+    (?i).+database.+: "vault"
+    (?i).+installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+SSL certificate to use.+: "n"
+    (?i).+trusted SSL certificate.+: "n"

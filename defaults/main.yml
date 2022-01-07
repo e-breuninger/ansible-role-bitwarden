@@ -16,7 +16,7 @@ bitwarden_ssl_mode: provided
 bitwarden_lets_encrypt_email:
 
 # @var bitwarden_nginx_cert_path:description:>
-# Path of the certificate file used for the Nginx container. 
+# Path of the certificate file used for the Nginx container, when bitwarden_ssl_mode is set to "provided".
 # The user of the role is responsible for providing a valid certificate file.
 # File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 bitwarden_nginx_cert_path:
@@ -48,10 +48,8 @@ bitwarden_global_env: {}
 # @end
 bitwarden_setup_config: {}
 
-
-bitwarden_start_after_install: true
-
 # @var bitwarden_test_install_script:description:> 
-# When enabled, disables jobs that will overwrite the bitwarden.sh and run.sh scripts
+# When enabled, disables jobs that will overwrite the bitwarden.sh and run.sh scripts. This is
+# specifically for cases like adding the `--test-cert` option to the certbot in the run.sh script
 # @end
 bitwarden_test_install_script: false
