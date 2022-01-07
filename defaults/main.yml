@@ -8,11 +8,11 @@ bitwarden_domain_name: localhost
 
 # @var bitwarden_ssl_provider:description:>
 # Provides the SSL mode to use when setting up the installation
-# Options: provided, generate, lets-encrypt, disable
+# Options: provided, generate, lets_encrypt, disable
 # @end
 bitwarden_ssl_mode: provided
 
-# @var bitwarden_lets_encrpyt_email:description: Lets Encrypt email account if bitwarden_ssl_mode set to lets-encrypt
+# @var bitwarden_lets_encrpyt_email:description: Lets Encrypt email account if bitwarden_ssl_mode set to "lets_encrypt"
 bitwarden_lets_encrypt_email:
 
 # @var bitwarden_nginx_cert_path:description:>

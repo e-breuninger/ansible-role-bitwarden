@@ -19,7 +19,7 @@
       - bitwarden_nginx_key_path | length > 0
 
 - name: Check required variables for SSL mode "lets-encrypt"
-  when: bitwarden_ssl_mode == "lets-encrypt"
+  when: bitwarden_ssl_mode == "lets_encrypt"
   assert:
     that:
       - bitwarden_lets_encrypt_email != ""
