@@ -12,7 +12,7 @@
 
 - name: Include Bitwarden setup
   include_tasks: includes/install.yml
-  #when: not output_dir.stat.exists
+  when: not output_dir.stat.exists
 
 - name: Configure Bitwarden
   include_tasks: includes/configure.yml
