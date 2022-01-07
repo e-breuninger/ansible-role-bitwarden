@@ -50,3 +50,5 @@ bitwarden_setup_config: {}
 
 
 bitwarden_start_after_install: true
+
+bitwarden_test_install: false
