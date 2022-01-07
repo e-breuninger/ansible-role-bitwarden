@@ -2,6 +2,7 @@
   expect:
     command: ./bitwarden.sh install
     responses: "{{ bitwarden_install_inputs[bitwarden_ssl_mode] }}"
+    timeout: 300
     creates: bwdata/config.yml
   register: bw_install
   args:

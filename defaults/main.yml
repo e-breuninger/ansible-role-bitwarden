@@ -5,7 +5,6 @@ bitwarden_version: "v1.43.0"
 # @var bitwarden_domain_name:description: Domain name witch used for hole bitwarden setup
 bitwarden_domain_name: localhost
 
-
 # @var bitwarden_ssl_provider:description:>
 # Provides the SSL mode to use when setting up the installation
 # Options: provided, generate, lets_encrypt, disable
