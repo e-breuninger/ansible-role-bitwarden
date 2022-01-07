@@ -51,4 +51,7 @@ bitwarden_setup_config: {}
 
 bitwarden_start_after_install: true
 
-bitwarden_test_install: false
+# @var bitwarden_test_install_script:description:> 
+# When enabled, disables jobs that will overwrite the bitwarden.sh and run.sh scripts
+# @end
+bitwarden_test_install_script: false
