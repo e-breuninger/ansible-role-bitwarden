@@ -1,7 +1,7 @@
 - name: Run install bitwarden.sh with SSL mode set to "provided"
   expect:
     command: ./bitwarden.sh install
-    responses: {{ bitwarden_install_inputs[bitwarden_ssl_mode] }}
+    responses: "{{ bitwarden_install_inputs[bitwarden_ssl_mode] }}"
     creates: bwdata/config.yml
   register: bw_install
   args:
