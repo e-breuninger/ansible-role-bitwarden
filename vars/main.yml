@@ -29,7 +29,7 @@ bitwarden_install_inputs:
     (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
     (?i).+Do you have a SSL certificate to use?.+: "n"
     (?i).+Do you want to generate a self-signed SSL certificate?.+: "y"
-  disabled:
+  disable:
     (?i).+Enter the domain name for your Bitwarden instance.+: "{{ bitwarden_domain_name }}"
     (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "n"
     (?i).+Enter the database name for your Bitwarden instance.+: "vault"
