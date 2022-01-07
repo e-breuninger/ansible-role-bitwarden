@@ -36,4 +36,4 @@ bitwarden_install_inputs:
     (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
     (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
     (?i).+Do you have a SSL certificate to use?.+: "n"
-    (?i).+trusted SSL certificate.+: "n"
+    (?i).+Do you want to generate a self-signed SSL certificate?.+: "n"
