@@ -4,3 +4,36 @@ bitwarden_user_home: /opt/bitwarden
 bitwarden_group: bitwarden
 bitwarden_install_dir: "{{ bitwarden_user_home }}/bwdata"
 bitwarden_output_dir: "{{ bitwarden_install_dir }}/docker"
+
+bitwarden_install_inputs:
+  provided:
+    (?i).+Enter the domain name for your Bitwarden instance.+: "{{ bitwarden_domain_name }}"
+    (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "n"
+    (?i).+Enter the database name for your Bitwarden instance.+: "vault"
+    (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+Do you have a SSL certificate to use?.+: "y"
+    (?i).+Is this a trusted SSL certificate (requires ca.crt, see docs)?.+: "n"
+  lets_encrypt:
+    (?i).+Enter the domain name for your Bitwarden instance.+: "{{ bitwarden_domain_name }}"
+    (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "y"
+    (?i).+email address.+: "{{ bitwarden_lets_encrypt_email }}"
+    (?i).+database.+: "vault"
+    (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
+  generate:
+    (?i).+Enter the domain name for your Bitwarden instance.+: "{{ bitwarden_domain_name }}"
+    (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "n"
+    (?i).+Enter the database name for your Bitwarden instance.+: "vault"
+    (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+Do you have a SSL certificate to use?.+: "n"
+    (?i).+Do you want to generate a self-signed SSL certificate?.+: "y"
+  disable:
+    (?i).+Enter the domain name for your Bitwarden instance.+: "{{ bitwarden_domain_name }}"
+    (?i).+Do you want to use Let's Encrypt to generate a free SSL certificate?.+: "n"
+    (?i).+Enter the database name for your Bitwarden instance.+: "vault"
+    (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
+    (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+Do you have a SSL certificate to use?.+: "n"
+    (?i).+Do you want to generate a self-signed SSL certificate?.+: "n"

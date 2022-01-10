@@ -14,6 +14,7 @@
   register: user
 
 - name: Download bitwarden.sh for {{ bitwarden_version }}
+  when: not bitwarden_test_install_script
   get_url:
     url: https://raw.githubusercontent.com/bitwarden/server/{{ bitwarden_version }}/scripts/bitwarden.sh
     dest: "{{ bitwarden_user_home }}/bitwarden.sh"

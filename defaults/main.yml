@@ -5,17 +5,26 @@ bitwarden_version: "v1.43.0"
 # @var bitwarden_domain_name:description: Domain name witch used for hole bitwarden setup
 bitwarden_domain_name: localhost
 
+# @var bitwarden_ssl_provider:description:>
+# Provides the SSL mode to use when setting up the installation
+# Options: provided, generate, lets_encrypt, disable
+# @end
+bitwarden_ssl_mode: provided
+
 # @var bitwarden_nginx_cert_path:description:>
-# Path of the certificate file used for the Nginx container (required).
+# Path of the certificate file used for the Nginx container, when bitwarden_ssl_mode is set to "provided".
 # The user of the role is responsible for providing a valid certificate file.
 # File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 bitwarden_nginx_cert_path:
 
 # @var bitwarden_nginx_key_path:description:>
-# Path of the key file used for the Nginx container (required).
+# Path of the key file used for the Nginx container.
 # The user of the role is responsible for providing a valid key file.
 # File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 bitwarden_nginx_key_path:
+
+# @var bitwarden_lets_encrpyt_email:description: Lets Encrypt email account if bitwarden_ssl_mode set to "lets_encrypt"
+bitwarden_lets_encrypt_email:
 
 # @var bitwarden_global_env:description:>
 # Map of global Bitwarden environment variables. Each entire is mapped to the global.override.env.
@@ -37,3 +46,9 @@ bitwarden_global_env: {}
 #   database_docker_volume: true
 # @end
 bitwarden_setup_config: {}
+
+# @var bitwarden_test_install_script:description:> 
+# When enabled, disables jobs that will overwrite the bitwarden.sh and run.sh scripts. This is
+# specifically for cases like adding the `--test-cert` option to the certbot in the run.sh script
+# @end
+bitwarden_test_install_script: false
