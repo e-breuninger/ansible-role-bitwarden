@@ -12,14 +12,13 @@ bitwarden_domain_name: localhost
 bitwarden_ssl_mode: provided
 
 # @var bitwarden_nginx_cert_path:description:>
-# Path of the certificate file used for the Nginx container, when bitwarden_ssl_mode is set to "provided".
+# Path of the certificate file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`).
 # The user of the role is responsible for providing a valid certificate file.
 # File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 bitwarden_nginx_cert_path:
 
 # @var bitwarden_nginx_key_path:description:>
-# Path of the key file used for the Nginx container.
-# The user of the role is responsible for providing a valid key file.
+# Path of the key file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`). The user of the role is responsible for providing a valid key file.
 # File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 bitwarden_nginx_key_path:
 
@@ -48,7 +47,8 @@ bitwarden_global_env: {}
 bitwarden_setup_config: {}
 
 # @var bitwarden_test_install_script:description:> 
-# When enabled, disables jobs that will overwrite the bitwarden.sh and run.sh scripts. This is
-# specifically for cases like adding the `--test-cert` option to the certbot in the run.sh script
+# A flag to disable downloading the `bitwarden.sh` script. Used in cases where the Let's Encrypt ssl_mode needs to be 
+# tested without fear of hitting the Let's Encrypt rate limit. Or to test changes to the `bitwarden.sh` or `run.sh`
+# scripts. Hopefully this flag can be added to the `bitwarden.sh` script in the future instead of being used here.
 # @end
 bitwarden_test_install_script: false

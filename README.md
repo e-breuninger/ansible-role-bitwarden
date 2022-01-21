@@ -10,31 +10,6 @@ It makes heavy use of handlers to trigger reconfigure and update tasks.
 If you need any task not covered by the role it's totally fine to use the setup script on the machine directly.
 Use the official docs as reference: https://bitwarden.com/help/article/install-on-premise/
 
-## Table of content
-
-* [Usage](#Usage)
-  * [SSL Modes](#ssl-modes)
-    * [User Provided SSL](#user-provided)
-    * [Let's Encrypt](#lets-encrypt)
-    * [Generated self signed](#generated-self-signed)
-    * [No SSL](#no-ssl)
-* [Default Variables](#default-variables)
-  * [bitwarden_domain_name](#bitwarden_domain_name)
-  * [bitwarden_global_env](#bitwarden_global_env)
-  * [bitwarden_ssl_mode](#bitwarden_ssl_mode)
-  * [bitwarden_nginx_cert_path](#bitwarden_nginx_cert_path)
-  * [bitwarden_nginx_key_path](#bitwarden_nginx_key_path)
-  * [bitwarden_lets_encrypt_email](#bitwarden_lets_encrypt_email)
-  * [bitwarden_setup_config](#bitwarden_setup_config)
-  * [bitwarden_version](#bitwarden_version)
-  * [bitwarden_test_install_script](#bitwarden_test_install_script)
-* [Dependencies](#dependencies)
-* [Known Issues](#known-issues)
-* [License](#license)
-* [Author](#author)
-
----
-
 ## Usage
 
 The role is currently not in Ansible Galaxy due to an issue of connecting out Github organisation with Galaxy.
@@ -42,20 +17,30 @@ As soon this is fixed you will be able to use it via Galaxy.
 
 Add the following to your `requirements.yml`
 
-```YAML
-roles:
-  - src: git+https://github.com/e-breuninger/ansible-role-bitwarden.git
-    name: breuninger.bitwarden
-    version: 0.1.0
-```
+    roles:
+      - src: git+https://github.com/e-breuninger/ansible-role-bitwarden.git
+        name: breuninger.bitwarden
+        version: 0.1.0
 
 Add the role to your playbook:
 
-```YAML
-- hosts: server
-  roles:
-    - { role: breuninger.bitwarden }
-```
+    - hosts: server
+      roles:
+        - { role: breuninger.bitwarden }
+
+
+## Known issues
+
+### Certbot
+
+We currently only support static TLS certificates for Nginx. The Certbot integration is not configured.
+Feel free to add this feature as a PR if needed. 
+
+### Bitwarden version
+
+Bitwarden has a different version in the setup files than in the tagged version of the repo may indicates.
+This is due to their release strategy, which always increases the actual version only in the master. We are already in talks with Bitwarden and hope for a different mode of release.
+
 
 ### SSL Modes
 
@@ -122,6 +107,28 @@ reverse proxy.
         bitwarden_ssl_mode: disable
 ```
 
+Install and configure bitwarden on premise in docker-compose fashion.
+
+## Table of content
+
+* [Default Variables](#default-variables)
+  * [bitwarden_domain_name](#bitwarden_domain_name)
+  * [bitwarden_global_env](#bitwarden_global_env)
+  * [bitwarden_lets_encrpyt_email](#bitwarden_lets_encrpyt_email)
+  * [bitwarden_lets_encrypt_email](#bitwarden_lets_encrypt_email)
+  * [bitwarden_nginx_cert_path](#bitwarden_nginx_cert_path)
+  * [bitwarden_nginx_key_path](#bitwarden_nginx_key_path)
+  * [bitwarden_setup_config](#bitwarden_setup_config)
+  * [bitwarden_ssl_mode](#bitwarden_ssl_mode)
+  * [bitwarden_ssl_provider](#bitwarden_ssl_provider)
+  * [bitwarden_test_install_script](#bitwarden_test_install_script)
+  * [bitwarden_version](#bitwarden_version)
+* [Dependencies](#dependencies)
+* [License](#license)
+* [Author](#author)
+
+---
+
 ## Default Variables
 
 ### bitwarden_domain_name
@@ -152,14 +159,16 @@ bitwarden_global_env:
   globalSettings__mail__smtp__port: 25
 ```
 
-### bitwarden_ssl_mode
+### bitwarden_lets_encrpyt_email
 
-Mode of SSL to use while installing (required). Options: `provided`, `generate`, `lets_encrypt`, `disable`.
+Lets Encrypt email account if bitwarden_ssl_mode set to "lets_encrypt"
+
+### bitwarden_lets_encrypt_email
 
 #### Default value
 
 ```YAML
-bitwarden_ssl_mode: provided
+bitwarden_lets_encrypt_email:
 ```
 
 ### bitwarden_nginx_cert_path
@@ -182,16 +191,6 @@ Path of the key file used for the Nginx container (required if `bitwarden_ssl_mo
 bitwarden_nginx_key_path:
 ```
 
-### bitwarden_lets_encrypt_email
-
-Email for Let's Encrypt account. Used by Let's Encrypt to communicate cert expiration notifications
-
-#### Default value
-
-```YAML
-bitwarden_lets_encrypt_email: 
-```
-
 ### bitwarden_setup_config
 
 Map of Bitwarden setup configuration values to override. Use this to change values in the generated config.yml file from Bitwarden.
@@ -209,6 +208,28 @@ bitwarden_setup_config:
   database_docker_volume: true
 ```
 
+### bitwarden_ssl_mode
+
+#### Default value
+
+```YAML
+bitwarden_ssl_mode: provided
+```
+
+### bitwarden_ssl_provider
+
+Provides the SSL mode to use when setting up the installation Options: provided, generate, lets_encrypt, disable
+
+### bitwarden_test_install_script
+
+A flag to disable downloading the `bitwarden.sh` script. Used in cases where the Let's Encrypt ssl_mode needs to be tested without fear of hitting the Let's Encrypt rate limit. Or to test changes to the `bitwarden.sh` or `run.sh` scripts. Hopefully this flag can be added to the `bitwarden.sh` script in the future instead of being used here.
+
+#### Default value
+
+```YAML
+bitwarden_test_install_script: false
+```
+
 ### bitwarden_version
 
 #### Default value
@@ -217,31 +238,9 @@ bitwarden_setup_config:
 bitwarden_version: v1.43.0
 ```
 
-### bitwarden_test_install_script
-
-A flag to disable downloading the `bitwarden.sh` script. Used in cases where the Let's Encrypt ssl_mode needs to be 
-tested without fear of hitting the Let's Encrypt rate limit. Or to test changes to the `bitwarden.sh` or `run.sh`
-scripts. Hopefully this flag can be added to the `bitwarden.sh` script in the future instead of being used here.
-
-#### Default value
-
-```YAML
-bitwarden_test_install_script: false
-```
-
 ## Dependencies
 
 None.
-
-## Known issues
-
-### Bitwarden version
-
-Bitwarden has a different version in the setup files than in the tagged version of the repo may indicates.
-This is due to their release strategy, which always increases the actual version only in the master. We are already in talks with Bitwarden and hope for a different mode of release.
-
-Install and configure bitwarden on premise in docker-compose fashion.
-
 
 ## License
 
