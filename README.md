@@ -12,16 +12,6 @@ Use the official docs as reference: https://bitwarden.com/help/article/install-o
 
 ## Usage
 
-The role is currently not in Ansible Galaxy due to an issue of connecting out Github organisation with Galaxy.
-As soon this is fixed you will be able to use it via Galaxy. 
-
-Add the following to your `requirements.yml`
-
-    roles:
-      - src: git+https://github.com/e-breuninger/ansible-role-bitwarden.git
-        name: breuninger.bitwarden
-        version: 0.1.0
-
 Add the role to your playbook:
 
     - hosts: server
@@ -248,4 +238,4 @@ MIT
 
 ## Author
 
-Marco Frese <marco.frese@breuninger.de>
+Operations Core Toolig <ops-core-tooling@breuninger.de>
