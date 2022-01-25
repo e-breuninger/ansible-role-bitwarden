@@ -1,5 +1,6 @@
 galaxy_info:
-  role_name: breuninger.bitwarden
+  role_name: bitwarden
+  namespace: breuninger
   author: Marco Frese <marco.frese@breuninger.de>
   description: Install and configure bitwarden on premise in docker-compose fashion.
   company: E. Breuninger GmbH & Co.
