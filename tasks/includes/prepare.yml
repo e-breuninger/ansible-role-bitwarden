@@ -13,10 +13,10 @@
     home: "{{ bitwarden_user_home }}"
   register: user
 
-- name: Download bitwarden.sh for {{ bitwarden_selfhost_version }}
+- name: Download bitwarden.sh for {{ bitwarden_script_version }}
   when: not bitwarden_test_install_script
   get_url:
-    url: https://raw.githubusercontent.com/bitwarden/self-host/{{ bitwarden_selfhost_version }}/bitwarden.sh
+    url: https://raw.githubusercontent.com/bitwarden/self-host/{{ bitwarden_script_version }}/bitwarden.sh
     dest: "{{ bitwarden_user_home }}/bitwarden.sh"
     mode: "0700"
     owner: "{{ bitwarden_user }}"

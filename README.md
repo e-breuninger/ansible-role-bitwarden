@@ -112,7 +112,7 @@ Install and configure bitwarden on premise in docker-compose fashion.
   * [bitwarden_ssl_mode](#bitwarden_ssl_mode)
   * [bitwarden_ssl_provider](#bitwarden_ssl_provider)
   * [bitwarden_test_install_script](#bitwarden_test_install_script)
-  * [bitwarden_selfhost_version](#bitwarden_selfhost_version)
+  * [bitwarden_script_version](#bitwarden_script_version)
 * [Dependencies](#dependencies)
 * [License](#license)
 * [Author](#author)
@@ -220,12 +220,12 @@ A flag to disable downloading the `bitwarden.sh` script. Used in cases where the
 bitwarden_test_install_script: false
 ```
 
-### bitwarden_selfhost_version
+### bitwarden_script_version
 
 #### Default value
 
 ```YAML
-bitwarden_selfhost_version: v1.0.0
+bitwarden_script_version: v1.0.0
 ```
 
 ## Dependencies
