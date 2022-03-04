@@ -50,7 +50,7 @@ untrusted certs provided by the user, this role requires it to be trusted (signe
       vars:
         bitwarden_ssl_mode: provided
         bitwarden_nginx_cert_path: /path/to/ssl/cert
-        bitwarden_nginx_cert_key: /path/to/ssl/key
+        bitwarden_nginx_key_path: /path/to/ssl/key
 ```
 
 If an untrusted-user-provided-cert usecase is needed, it can be added with a new ssl_mode and corresponding inputs in 
@@ -112,7 +112,7 @@ Install and configure bitwarden on premise in docker-compose fashion.
   * [bitwarden_ssl_mode](#bitwarden_ssl_mode)
   * [bitwarden_ssl_provider](#bitwarden_ssl_provider)
   * [bitwarden_test_install_script](#bitwarden_test_install_script)
-  * [bitwarden_version](#bitwarden_version)
+  * [bitwarden_script_version](#bitwarden_script_version)
 * [Dependencies](#dependencies)
 * [License](#license)
 * [Author](#author)
@@ -220,12 +220,12 @@ A flag to disable downloading the `bitwarden.sh` script. Used in cases where the
 bitwarden_test_install_script: false
 ```
 
-### bitwarden_version
+### bitwarden_script_version
 
 #### Default value
 
 ```YAML
-bitwarden_version: v1.43.0
+bitwarden_script_version: v1.0.0
 ```
 
 ## Dependencies
