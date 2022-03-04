@@ -50,7 +50,7 @@ untrusted certs provided by the user, this role requires it to be trusted (signe
       vars:
         bitwarden_ssl_mode: provided
         bitwarden_nginx_cert_path: /path/to/ssl/cert
-        bitwarden_nginx_cert_key: /path/to/ssl/key
+        bitwarden_nginx_key_path: /path/to/ssl/key
 ```
 
 If an untrusted-user-provided-cert usecase is needed, it can be added with a new ssl_mode and corresponding inputs in 
