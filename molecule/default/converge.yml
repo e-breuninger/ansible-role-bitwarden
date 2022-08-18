@@ -2,7 +2,7 @@
 - name: Converge
   hosts: all
   vars:
-    bitwarden_version: "master"
+    bitwarden_script_version: "master"
     # Use snakeoil certs installed in prepare step
     bitwarden_nginx_key_path: /etc/ssl/private/ssl-cert-snakeoil.key
     bitwarden_nginx_cert_path: /etc/ssl/certs/ssl-cert-snakeoil.pem
