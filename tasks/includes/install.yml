@@ -1,5 +1,5 @@
 - name: Run install bitwarden.sh with SSL mode {{ bitwarden_ssl_mode }}
-  expect:
+  ansible.builtin.expect:
     command: ./bitwarden.sh install
     responses: "{{ bitwarden_install_inputs[bitwarden_ssl_mode] }}"
     timeout: 300
@@ -11,10 +11,10 @@
   become: true
 
 - name: Debug output
-  debug:
+  ansible.builtin.debug:
     var: bw_install
     verbosity: 1
 
 - name: Check install command output
-  assert:
+  ansible.builtin.assert:
     that: "'Installation complete' in bw_install.stdout"

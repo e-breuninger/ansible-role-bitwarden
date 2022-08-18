@@ -1,6 +1,6 @@
 - name: Copy Bitwarden nginx certificate in place
   when: bitwarden_ssl_mode == "provided"
-  copy:
+  ansible.builtin.copy:
     src: "{{ bitwarden_nginx_cert_path }}"
     dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/certificate.crt"
     remote_src: true
@@ -10,7 +10,7 @@
 
 - name: Copy Bitwarden nginx key in place
   when: bitwarden_ssl_mode == "provided"
-  copy:
+  ansible.builtin.copy:
     src: "{{ bitwarden_nginx_key_path }}"
     dest: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}/private.key"
     remote_src: true
