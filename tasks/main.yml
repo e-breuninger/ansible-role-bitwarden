@@ -1,9 +1,9 @@
 ---
 - name: Check role requirements
-  include_tasks: includes/preflight.yml
+  ansible.builtin.include_tasks: includes/preflight.yml
 
 - name: Ensure user and environment
-  include_tasks: includes/prepare.yml
+  ansible.builtin.include_tasks: includes/prepare.yml
 
 - name: Check Bitwarden is already installed
   ansible.builtin.stat:
@@ -11,8 +11,8 @@
   register: output_dir
 
 - name: Include Bitwarden setup
-  include_tasks: includes/install.yml
+  ansible.builtin.include_tasks: includes/install.yml
   when: not output_dir.stat.exists or bitwarden_test_install_script
 
 - name: Configure Bitwarden
-  include_tasks: includes/configure.yml
+  ansible.builtin.include_tasks: includes/configure.yml

@@ -1,25 +1,25 @@
 ---
 - name: Check required shared variables 
-  assert:
+  ansible.builtin.assert:
     that:
       - bitwarden_domain_name | length > 0
       - bitwarden_global_installation_id | length > 0
       - bitwarden_global_installation_key | length > 0
 
 - name: Check supported ssl-mode
-  assert:
+  ansible.builtin.assert:
     that:
       - bitwarden_ssl_mode in ["provided", "lets_encrypt", "generate", "disable"]
 
 - name: Check required variables for SSL mode "provided"
   when: bitwarden_ssl_mode == "provided"
-  assert:
+  ansible.builtin.assert:
     that:
       - bitwarden_nginx_cert_path | length > 0
       - bitwarden_nginx_key_path | length > 0
 
 - name: Check required variables for SSL mode "lets_encrypt"
   when: bitwarden_ssl_mode == "lets_encrypt"
-  assert:
+  ansible.builtin.assert:
     that:
       - bitwarden_lets_encrypt_email != ""

@@ -1,10 +1,10 @@
 - name: Ensure bitwarden group
-  group:
+  ansible.builtin.group:
     name: "{{ bitwarden_group }}"
     state: present
 
 - name: Ensure bitwarden user
-  user:
+  ansible.builtin.user:
     name: "{{ bitwarden_user }}"
     group: "{{ bitwarden_group }}"
     groups:
@@ -15,7 +15,7 @@
 
 - name: Download bitwarden.sh for {{ bitwarden_script_version }}
   when: not bitwarden_test_install_script
-  get_url:
+  ansible.builtin.get_url:
     url: https://raw.githubusercontent.com/bitwarden/self-host/{{ bitwarden_script_version }}/bitwarden.sh
     dest: "{{ bitwarden_user_home }}/bitwarden.sh"
     mode: "0700"
