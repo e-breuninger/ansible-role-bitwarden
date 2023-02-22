@@ -1,23 +1,26 @@
 ---
 # Handlers always run in the order they are defined, not in the order listed in the notify-statement.
-- name: rebuild bitwarden
+- name: Rebuild bitwarden
   ansible.builtin.command: ./bitwarden.sh rebuild
   args:
     chdir: "{{ bitwarden_user_home }}"
   become_user: "{{ bitwarden_user }}"
   become: true
+  listen: rebuild_bitwarden
 
-- name: restart bitwarden
+- name: Restart bitwarden
   ansible.builtin.command: ./bitwarden.sh restart
   args:
     chdir: "{{ bitwarden_user_home }}"
   become_user: "{{ bitwarden_user }}"
-  become: true
+  become: true#
+  listen: restart_bitwarden
 
 # Update should run at last when containers are running
-- name: update bitwarden
+- name: Update bitwarden
   ansible.builtin.command: ./bitwarden.sh update
   args:
     chdir: "{{ bitwarden_user_home }}"
   become_user: "{{ bitwarden_user }}"
   become: true
+  listen: update_bitwarden
