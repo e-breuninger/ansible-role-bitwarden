@@ -23,15 +23,15 @@ jobs:
         with:
           path: "breuninger.bitwarden"
 
-      - name: "Free up disk space"
-        run: |
-          pwd
-          df -h
-          sudo apt-get -qq purge build-essential ghc*  azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
-          sudo apt-get clean
-          docker system prune -af
-          sudo rm -rf /usr/local/*
-          df -h
+#      - name: "Free up disk space"
+#        run: |
+#          pwd
+#          df -h
+#          sudo apt-get -qq purge build-essential ghc*  azure-cli google-cloud-sdk google-chrome-stable firefox powershell mono-devel
+#          sudo apt-get clean
+#          docker system prune -af
+#          sudo rm -rf /usr/local/*
+#          df -h
 
       - name: Set up Python 3.
         uses: actions/setup-python@v4.4.0
