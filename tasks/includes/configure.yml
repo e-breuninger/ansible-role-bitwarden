@@ -34,7 +34,7 @@
     line: "{{ item.key }}: {{ item.value }}"
   loop: "{{ bitwarden_setup_config | dict2items }}"
   register: bw_config
-  notify: rebuild bitwarden
+  notify: rebuild_bitwarden
 
 - name: Ensure Bitwarden global environment
   ansible.builtin.lineinfile:
@@ -43,4 +43,4 @@
     line: "{{ item.key }}={{ item.value }}"
   loop: "{{ bitwarden_global_env | dict2items }}"
   no_log: true
-  notify: restart bitwarden
+  notify: restart_bitwarden
