@@ -101,21 +101,23 @@ Install and configure bitwarden on premise in docker-compose fashion.
 
 ## Table of content
 
-* [Default Variables](#default-variables)
-  * [bitwarden_domain_name](#bitwarden_domain_name)
-  * [bitwarden_global_env](#bitwarden_global_env)
-  * [bitwarden_lets_encrpyt_email](#bitwarden_lets_encrpyt_email)
-  * [bitwarden_lets_encrypt_email](#bitwarden_lets_encrypt_email)
-  * [bitwarden_nginx_cert_path](#bitwarden_nginx_cert_path)
-  * [bitwarden_nginx_key_path](#bitwarden_nginx_key_path)
-  * [bitwarden_setup_config](#bitwarden_setup_config)
-  * [bitwarden_ssl_mode](#bitwarden_ssl_mode)
-  * [bitwarden_ssl_provider](#bitwarden_ssl_provider)
-  * [bitwarden_test_install_script](#bitwarden_test_install_script)
-  * [bitwarden_script_version](#bitwarden_script_version)
-* [Dependencies](#dependencies)
-* [License](#license)
-* [Author](#author)
+- [Requirements](#requirements)
+- [Default Variables](#default-variables)
+  - [bitwarden_domain_name](#bitwarden_domain_name)
+  - [bitwarden_global_env](#bitwarden_global_env)
+  - [bitwarden_lets_encrpyt_email](#bitwarden_lets_encrpyt_email)
+  - [bitwarden_lets_encrypt_email](#bitwarden_lets_encrypt_email)
+  - [bitwarden_nginx_cert_path](#bitwarden_nginx_cert_path)
+  - [bitwarden_nginx_key_path](#bitwarden_nginx_key_path)
+  - [bitwarden_region](#bitwarden_region)
+  - [bitwarden_script_version](#bitwarden_script_version)
+  - [bitwarden_setup_config](#bitwarden_setup_config)
+  - [bitwarden_ssl_mode](#bitwarden_ssl_mode)
+  - [bitwarden_ssl_provider](#bitwarden_ssl_provider)
+  - [bitwarden_test_install_script](#bitwarden_test_install_script)
+- [Dependencies](#dependencies)
+- [License](#license)
+- [Author](#author)
 
 ---
 
@@ -123,7 +125,7 @@ Install and configure bitwarden on premise in docker-compose fashion.
 
 ### bitwarden_domain_name
 
-Domain name witch used for hole bitwarden setup
+Domain name which used for Bitwarden
 
 #### Default value
 
@@ -133,7 +135,8 @@ bitwarden_domain_name: localhost
 
 ### bitwarden_global_env
 
-Map of global Bitwarden environment variables. Each entire is mapped to the global.override.env. See https://bitwarden.com/help/article/environment-variables/
+Map of global Bitwarden environment variables. Each entire is mapped to the global.override.env.
+See https://bitwarden.com/help/article/environment-variables/
 
 #### Default value
 
@@ -163,7 +166,9 @@ bitwarden_lets_encrypt_email:
 
 ### bitwarden_nginx_cert_path
 
-Path of the certificate file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`). The user of the role is responsible for providing a valid certificate file. File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
+Path of the certificate file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`).
+The user of the role is responsible for providing a valid certificate file.
+File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 
 #### Default value
 
@@ -173,7 +178,8 @@ bitwarden_nginx_cert_path:
 
 ### bitwarden_nginx_key_path
 
-Path of the key file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`). The user of the role is responsible for providing a valid key file. File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
+Path of the key file used for the Nginx container (required if `bitwarden_ssl_mode == "provided"`). The user of the role is responsible for providing a valid key file.
+File is copied from the provided location to Bitwardens user home in order to garantue the correct mapping inside the container.
 
 #### Default value
 
@@ -181,9 +187,29 @@ Path of the key file used for the Nginx container (required if `bitwarden_ssl_mo
 bitwarden_nginx_key_path:
 ```
 
+### bitwarden_region
+
+Region which is used for Bitwarden.
+Options: US, EU
+
+#### Default value
+
+```YAML
+bitwarden_region: US
+```
+
+### bitwarden_script_version
+
+#### Default value
+
+```YAML
+bitwarden_script_version: v2023.12.0
+```
+
 ### bitwarden_setup_config
 
-Map of Bitwarden setup configuration values to override. Use this to change values in the generated config.yml file from Bitwarden.
+Map of Bitwarden setup configuration values to override.
+Use this to change values in the generated config.yml file from Bitwarden.
 
 #### Default value
 
@@ -208,11 +234,14 @@ bitwarden_ssl_mode: provided
 
 ### bitwarden_ssl_provider
 
-Provides the SSL mode to use when setting up the installation Options: provided, generate, lets_encrypt, disable
+Provides the SSL mode to use when setting up the installation
+Options: provided, generate, lets_encrypt, disable
 
 ### bitwarden_test_install_script
 
-A flag to disable downloading the `bitwarden.sh` script. Used in cases where the Let's Encrypt ssl_mode needs to be tested without fear of hitting the Let's Encrypt rate limit. Or to test changes to the `bitwarden.sh` or `run.sh` scripts. Hopefully this flag can be added to the `bitwarden.sh` script in the future instead of being used here.
+A flag to disable downloading the `bitwarden.sh` script. Used in cases where the Let's Encrypt ssl_mode needs to be
+tested without fear of hitting the Let's Encrypt rate limit. Or to test changes to the `bitwarden.sh` or `run.sh`
+scripts. Hopefully this flag can be added to the `bitwarden.sh` script in the future instead of being used here.
 
 #### Default value
 
@@ -220,13 +249,7 @@ A flag to disable downloading the `bitwarden.sh` script. Used in cases where the
 bitwarden_test_install_script: false
 ```
 
-### bitwarden_script_version
 
-#### Default value
-
-```YAML
-bitwarden_script_version: v1.0.0
-```
 
 ## Dependencies
 
