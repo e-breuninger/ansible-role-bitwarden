@@ -1,3 +1,12 @@
+- name: Ensure Bitwarden nginx certificate directory exists
+  when: bitwarden_ssl_mode == "provided"
+  file:
+    path: "{{ bitwarden_install_dir }}/ssl/{{ bitwarden_domain_name }}"
+    state: directory
+    owner: "{{ bitwarden_user }}"
+    group: "{{ bitwarden_group }}"
+    mode: "0755"
+
 - name: Copy Bitwarden nginx certificate in place
   when: bitwarden_ssl_mode == "provided"
   ansible.builtin.copy:

@@ -12,6 +12,7 @@ bitwarden_install_inputs:
     (?i).+Enter the database name for your Bitwarden instance.+: "vault"
     (?i).+Enter your installation id.+: "{{ bitwarden_global_installation_id }}"
     (?i).+Enter your installation key.+: "{{ bitwarden_global_installation_key }}"
+    (?i).+Enter your region.+: "{{ bitwarden_region }}"
     (?i).+Do you have a SSL certificate to use?.+: "y"
     (?i).+Is this a trusted SSL certificate (requires ca.crt, see docs)?.+: "n"
   lets_encrypt:
