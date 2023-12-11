@@ -1,4 +1,4 @@
-- name: Run install bitwarden.sh with SSL mode {{ bitwarden_ssl_mode }}
+- name: Run install bitwarden.sh with SSL mode "{{ bitwarden_ssl_mode }}"
   ansible.builtin.expect:
     command: ./bitwarden.sh install
     responses: "{{ bitwarden_install_inputs[bitwarden_ssl_mode] }}"
