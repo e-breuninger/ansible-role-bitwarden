@@ -27,7 +27,7 @@ jobs:
         run: |
           pwd
           df -h
-          sudo apt-get -qq purge build-essential ghc*  azure-cli google-cloud-sdk hhvm google-chrome-stable firefox powershell mono-devel
+          sudo apt-get -qq purge build-essential ghc* azure-cli google-cloud-sdk google-chrome-stable firefox powershell mono-devel
           sudo apt-get clean
           docker system prune -af
           sudo rm -rf /usr/local/*
@@ -46,3 +46,4 @@ jobs:
         env:
           PY_COLORS: "1"
           ANSIBLE_FORCE_COLOR: "1"
+          DEFAULT_STDOUT_CALLBACK: "yaml"

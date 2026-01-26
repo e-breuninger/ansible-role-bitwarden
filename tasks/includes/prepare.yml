@@ -21,4 +21,4 @@
     mode: "0700"
     owner: "{{ bitwarden_user }}"
     group: "{{ bitwarden_group }}"
-  notify: update bitwarden # Notify update when Bitwarden install has changed
+  notify: update_bitwarden # Notify update when Bitwarden install has changed
